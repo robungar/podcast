@@ -7,25 +7,35 @@ import APlayer from 'aplayer'
 
 
 class Player extends Component {
-	componentDidMount(){
-    var ap1 = new APlayer({
-      element: document.getElementById('player1'),
-      narrow: false,
-      autoplay: true,
-      showlrc: false,
-      mutex: true,
-      theme: '#e6d0b2',
-      preload: 'metadata',
-      mode: 'circulation',
-      music: [
-      	{
-          title: 'Preparation',
-          author: 'Hans Zimmer/Richard Harvey',
-          url: 'http://devtest.qiniudn.com/Preparation.mp3',
-          pic: 'http://devtest.qiniudn.com/Preparation.jpg'
-      	}
-      ]
-    });
+	constructor(){
+		super()
+		this.state = {
+		//	trackList: null,
+			player: null
+		}
+	}
+
+  initializePlayer(list){
+  	let sublist = []
+  	if(list.length > 3){ // limit list size to 3
+  		for(var i = 0; i < 3; i++){
+  			sublist.push(list[i])
+  		}
+  	} else {
+  		sublist = Object.assign([], list)
+  	}
+  	
+	 	var ap1 = new APlayer({
+    	element: document.getElementById('player1'),
+    	narrow: false,
+    	autoplay: false,
+    	showlrc: false,
+    	mutex: true,
+    	theme: '#e6d0b2',
+    	preload: 'metadata',
+    	mode: 'circulation',
+    	music: sublist
+  	});
     // ap1.on('play', function () {
     //     console.log('play');
     // });
@@ -47,10 +57,11 @@ class Player extends Component {
     // ap1.on('error', function () {
     //     console.log('error');
     // });
+    this.setState({
+    //	trackList: list,
+    	player: ap1
+    })
   }
-
-
-
 
 	searchPodcasts(event){
 		if(event.keyCode != 13)
@@ -76,14 +87,49 @@ class Player extends Component {
 		const feedUrl = this.props.podcasts.selected['feedUrl']
 		if (feedUrl == null)
 			return
-		console.log('feedUrl: '+JSON.stringify(feedUrl))
-		
+		// if(this.state.trackList != null)
+		// 	return
+		if(this.props.podcasts.trackList != null){
+			if(this.state.player == null){
+				this.initializePlayer(this.props.podcasts.trackList)
+			}
+			return
+		}
+
+		if(this.state.player != null){
+			this.state.player.pause()
+			this.setState({
+				player: null
+			})
+		}
+
+		APIClient
+		.get('/feed', {url: feedUrl})
+		.then(response => {
+			const podcast = response.podcast
+			const item = podcast.item
+			let list = []
+			item.forEach((track, i) => {
+				let trackInfo = {}
+				trackInfo['title'] = track.title[0]
+				trackInfo['author'] = this.props.podcasts.selected.artistName
+				trackInfo['pic'] = this.props.podcasts.selected['artworkUrl600']
+				
+				let enclosure = track.enclosure[0]['$']
+				trackInfo['url'] = enclosure['url']
+				list.push(trackInfo)
+			})
+			this.props.trackListReady(list)
+		})
+		.catch(err => {
+			console.log('ERROR: '+err.message)
+		})
 	}
 
 	render(){
 		return(
 			<div>
-				<div style={{paddingTop: '64px'}} className="hero-header bg-shop animated fadeindown">
+				<div style={{paddingTop:64}} className="hero-header bg-shop animated fadeindown">
 					<div className="p-20 animated fadeinup delay-1">
 						<div style={{background: '#fff'}} id="player1" className="aplayer"></div>
 					</div>
@@ -102,7 +148,8 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
 	return {
-		podcastsReceived: (podcasts) => dispatch(actions.podcastsReceived(podcasts))
+		podcastsReceived: (podcasts) => dispatch(actions.podcastsReceived(podcasts)),
+		trackListReady: (list) => dispatch(actions.trackListReady(list))
 	}
 }
 
