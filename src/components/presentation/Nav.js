@@ -14,11 +14,9 @@ export default (props) => {
 	    <nav id="menu" className="menu">
 	      <div className="menu-navigation">
 	        <ul className="full-menu collapsible">
-	          <li className="menu-title">Eclipse</li>
+	          <li className="menu-title">Menu</li>
 	          <li><a href="shop.html" className="no-child">Shop</a></li>
 	          <li><a href="news.html" className="no-child">News</a></li>
-	          <li><a href="video.html" className="no-child">Video</a></li>
-	          <li><a href="contact.html" className="no-child">Contact</a></li>
 	        </ul>
 	      </div>
 	    </nav>

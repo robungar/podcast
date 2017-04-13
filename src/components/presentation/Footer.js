@@ -6,21 +6,16 @@ export default (props) => {
       <div className="container">
         <div className="row">
           <div className="col s12">
-            <p className="center-align grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
             <div className="center-align">
-              <i className="ion-social-facebook m-10 white-text"></i>
-              <i className="ion-social-twitter m-10 white-text"></i>
-              <i className="ion-social-pinterest m-10 white-text"></i>
-              <i className="ion-social-dribbble m-10 white-text"></i>
+              <a href="https://github.com/robungar/podcast"><i className="ion-social-github m-10 white-text"></i></a>
             </div>
           </div>
         </div>
       </div>
       <div className="line white"></div>
       <div className="footer-copyright primary-color">
-        <div className="container">
-        2016 Codnauts
-          <a className="grey-text text-lighten-4 right" href="#!">Privacy Policy</a>
+        <div className="container center-align">
+        <p>2017 &copy; Rob Ungar</p>
         </div>
       </div>
     </footer>

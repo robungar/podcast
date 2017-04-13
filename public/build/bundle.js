@@ -11075,17 +11075,13 @@ exports.default = function (props) {
           "div",
           { className: "col s12" },
           _react2.default.createElement(
-            "p",
-            { className: "center-align grey-text text-lighten-4" },
-            "You can use rows and columns here to organize your footer content."
-          ),
-          _react2.default.createElement(
             "div",
             { className: "center-align" },
-            _react2.default.createElement("i", { className: "ion-social-facebook m-10 white-text" }),
-            _react2.default.createElement("i", { className: "ion-social-twitter m-10 white-text" }),
-            _react2.default.createElement("i", { className: "ion-social-pinterest m-10 white-text" }),
-            _react2.default.createElement("i", { className: "ion-social-dribbble m-10 white-text" })
+            _react2.default.createElement(
+              "a",
+              { href: "https://github.com/robungar/podcast" },
+              _react2.default.createElement("i", { className: "ion-social-github m-10 white-text" })
+            )
           )
         )
       )
@@ -11096,12 +11092,11 @@ exports.default = function (props) {
       { className: "footer-copyright primary-color" },
       _react2.default.createElement(
         "div",
-        { className: "container" },
-        "2016 Codnauts",
+        { className: "container center-align" },
         _react2.default.createElement(
-          "a",
-          { className: "grey-text text-lighten-4 right", href: "#!" },
-          "Privacy Policy"
+          "p",
+          null,
+          "2017 \xA9 Rob Ungar"
         )
       )
     )
@@ -11153,7 +11148,7 @@ exports.default = function (props) {
 					_react2.default.createElement(
 						"li",
 						{ className: "menu-title" },
-						"Eclipse"
+						"Menu"
 					),
 					_react2.default.createElement(
 						"li",
@@ -11171,24 +11166,6 @@ exports.default = function (props) {
 							"a",
 							{ href: "news.html", className: "no-child" },
 							"News"
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						null,
-						_react2.default.createElement(
-							"a",
-							{ href: "video.html", className: "no-child" },
-							"Video"
-						)
-					),
-					_react2.default.createElement(
-						"li",
-						null,
-						_react2.default.createElement(
-							"a",
-							{ href: "contact.html", className: "no-child" },
-							"Contact"
 						)
 					)
 				)
